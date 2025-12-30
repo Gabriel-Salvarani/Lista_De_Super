@@ -1,16 +1,24 @@
 import express from 'express';
-import dotenv from 'dotenv'; // 1. Importas
-import { connectDB } from './config/mongodb.js'; // Asegúrate de usar .js
+import dotenv from 'dotenv';
+import cors from 'cors';
+import { connectDB } from './config/mongodb';
+// Importamos el router (fijate el .js)
+import storeRoutes from './routes/StoreRoute'; 
 
-dotenv.config(); // 2. Ejecutas la configuración
+dotenv.config();
 
 const app = express();
 
-// Ahora puedes usar process.env sin problemas
-const PORT = process.env.PORT!;
+// Middlewares necesarios para que Express entienda JSON
+app.use(cors());
+app.use(express.json());
 
+// Conexión a la DB
 connectDB();
 
+app.use('/api/stores', storeRoutes);
+
+const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });

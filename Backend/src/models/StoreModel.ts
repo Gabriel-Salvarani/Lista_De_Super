@@ -4,7 +4,7 @@ import { IStore } from '../interfaces/StoreInterface.js';
 // Extendemos Document para que Mongoose reconozca los métodos de documento
 export interface IStoreDocument extends IStore, Document {}
 
-const storeSchema = new Schema({
+const storeSchema = new Schema<IStoreDocument>({
   name: { type: String, required: true, trim: true },
   location: { type: String, trim: true },
   items: [
@@ -14,6 +14,8 @@ const storeSchema = new Schema({
       purchased: { type: Boolean, default: false }
     }
   ]
-}, { timestamps: true }); // Esto añade createdAt y updatedAt automáticamente
+}, {
+  versionKey: false
+}); // Esto añade createdAt y updatedAt automáticamente
 
 export default model<IStoreDocument>('Store', storeSchema);
