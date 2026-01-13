@@ -25,7 +25,7 @@ const StoreCard = ({ store }) => {
     e.preventDefault();
     if (!itemName.trim()) return;
     try {
-      const res = await axios.patch(`http://localhost:3000/api/stores/${store._id}/items`, {
+      const res = await axios.patch(`https://lista-de-super.onrender.com/api/stores/${store._id}/items`, {
         name: itemName, quantity: Number(quantity), price: Number(price)
       });
       setItems(res.data?.items || []);
@@ -36,7 +36,7 @@ const StoreCard = ({ store }) => {
   const handleDeleteItem = async (itemId) => {
     if (!window.confirm("¿Borrar producto?")) return;
     try {
-      const res = await axios.delete(`http://localhost:3000/api/stores/${store._id}/items/${itemId}`);
+      const res = await axios.delete(`https://lista-de-super.onrender.com/api/stores/${store._id}/items/${itemId}`);
       // Aquí la clave: si res.data es la tienda, tomamos sus items; si no, array vacío
       setItems(res.data?.items || []);
     } catch (err) { 
@@ -47,14 +47,14 @@ const StoreCard = ({ store }) => {
 
   const togglePurchased = async (itemId) => {
     try {
-      const res = await axios.patch(`http://localhost:3000/api/stores/${store._id}/items/${itemId}`);
+      const res = await axios.patch('https://lista-de-super.onrender.com/api/stores/${store._id}/items/${itemId}`);
       setItems(res.data?.items || []);
     } catch (err) { console.error(err); }
   };
 
   const handleUpdateItem = async (itemId) => {
     try {
-      const res = await axios.put(`http://localhost:3000/api/stores/${store._id}/items/${itemId}`, {
+      const res = await axios.put(`https://lista-de-super.onrender.com/api/stores/${store._id}/items/${itemId}`, {
         name: editName, quantity: Number(editQty), price: Number(editPrice)
       });
       setItems(res.data?.items || []);
