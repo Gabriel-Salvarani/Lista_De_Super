@@ -47,7 +47,7 @@ const StoreCard = ({ store }) => {
 
   const togglePurchased = async (itemId) => {
     try {
-      const res = await axios.patch('https://lista-de-super.onrender.com/api/stores/${store._id}/items/${itemId}`);
+      const res = await axios.patch(`https://lista-de-super.onrender.com/api/stores/${store._id}/items/${itemId}`);
       setItems(res.data?.items || []);
     } catch (err) { console.error(err); }
   };
