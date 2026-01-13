@@ -24,12 +24,12 @@ export const getStores = async (_req: Request, res: Response) => {
 export const addItemProduct = async (req: Request, res: Response) => {
   try{
     const { id } = req.params;
-    const { name, quantity } = req.body;
+    const { name, quantity, price } = req.body;
 
     const store = await Store.findById(id);
     if(!store) return res.status(404).json({ message: 'Tienda no encontrada'});
 
-    store.items.push({ name, quantity, purchased: false });
+    store.items.push({ name, quantity, price, purchased: false });
     await store.save();
     res.status(201).json(store);
   } catch(error){
@@ -125,14 +125,15 @@ export const updateStore = async (req: Request, res: Response) => {
 export const updateItem = async (req: Request, res: Response) => {
   try {
     const { storeId, itemId } = req.params;
-    const { name, quantity } = req.body;
+    const { name, quantity, price } = req.body;
 
     const store = await Store.findOneAndUpdate(
       { _id: storeId, "items._id": itemId }, // Busca la tienda Y el item
       { 
         $set: { 
           "items.$.name": name, 
-          "items.$.quantity": quantity 
+          "items.$.quantity": quantity,
+          "items.$.price": price
         } 
       },
       { new: true }
