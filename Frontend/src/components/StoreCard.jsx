@@ -32,6 +32,18 @@ const StoreCard = ({ store }) => {
       setItemName(''); setQuantity(1); setPrice(0);
     } catch (err) { console.error(err); }
   };
+  const handleDeleteStore = async () => {
+  if (!window.confirm(`¿Seguro que quieres borrar la tienda ${store.name}?`)) return;
+
+  try {
+    await axios.delete(`https://tu-url-de-render.onrender.com/api/stores/${store._id}`);
+    // OJO: Después de borrar, hay que avisarle a la página principal que la tienda ya no existe
+    window.location.reload(); // La forma más rápida de refrescar la lista
+  } catch (err) {
+    console.error("Error al borrar tienda:", err);
+    alert("No se pudo borrar la tienda. Revisa la consola.");
+  }
+};
 
   const handleDeleteItem = async (itemId) => {
     if (!window.confirm("¿Borrar producto?")) return;
