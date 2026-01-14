@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 // Definimos la URL base para no repetirla y facilitar cambios
-const API_URL = 'https://lista-de-super-backend.onrender.com/api/stores'; 
+const API_URL = 'https://lista-de-super.onrender.com/api/stores'; 
 
 const StoreCard = ({ store }) => {
   const [isOpen, setIsOpen] = useState(false);
