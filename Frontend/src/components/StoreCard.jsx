@@ -36,7 +36,7 @@ const StoreCard = ({ store }) => {
   if (!window.confirm(`¿Seguro que quieres borrar la tienda ${store.name}?`)) return;
 
   try {
-    await axios.delete(`https://tu-url-de-render.onrender.com/api/stores/${store._id}`);
+    await axios.delete(`https://lista-de-super.onrender.com/api/stores/${store._id}`);
     // OJO: Después de borrar, hay que avisarle a la página principal que la tienda ya no existe
     window.location.reload(); // La forma más rápida de refrescar la lista
   } catch (err) {
@@ -89,7 +89,7 @@ const StoreCard = ({ store }) => {
           <h3 style={{ margin: 0, fontWeight: '800' }}>{store.name}</h3>
           <p style={{ color: '#888', fontSize: '0.8rem', margin: '4px 0' }}>📍 {store.location || "Sin ubicación"}</p>
         </div>
-        <button onClick={() => window.confirm("¿Borrar tienda?") && axios.delete(`http://localhost:3000/api/stores/${store._id}`).then(() => window.location.reload())} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>🗑️</button>
+        <button onClick={() => window.confirm("¿Borrar tienda?") && axios.delete(`https://lista-de-super.onrender.com/api/stores/${store._id}`).then(() => window.location.reload())} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>🗑️</button>
       </div>
 
       <button onClick={() => setIsOpen(!isOpen)} style={{ width: '100%', padding: '12px', marginTop: '10px', borderRadius: '12px', border: 'none', backgroundColor: isOpen ? '#f0f2f5' : '#007AFF', color: isOpen ? '#555' : '#fff', fontWeight: '700', cursor: 'pointer' }}>
