@@ -52,14 +52,29 @@ const StoreCard = ({ store }) => {
   };
 
   const handleDeleteItem = async (itemId) => {
-    if (!window.confirm("¿Borrar producto?")) return;
-    try {
-      const res = await axios.delete(`${API_URL}/${store._id}/items/${itemId}`);
-      setItems(res.data?.items || []);
-    } catch (err) { 
-      console.error("Error al borrar item:", err);
+  if (!window.confirm("¿Borrar producto?")) return;
+
+  // 1. Guardamos una copia de los items actuales por si falla el servidor
+  const previousItems = [...items];
+
+  // 2. Actualización Optimista: Lo borramos de la pantalla ANTES de llamar al servidor
+  // Esto hace que la app se sienta súper rápida
+  setItems(items.filter(item => item._id !== itemId));
+
+  try {
+    const res = await axios.delete(`${API_URL}/${store._id}/items/${itemId}`);
+    
+    // 3. Si el servidor responde con la tienda actualizada, sincronizamos
+    if (res.data && res.data.items) {
+      setItems(res.data.items);
     }
-  };
+  } catch (err) {
+    console.error("Error al borrar item:", err);
+    alert("No se pudo borrar el producto en el servidor.");
+    // 4. Si falló, devolvemos los items que estaban antes
+    setItems(previousItems);
+  }
+};
 
   const togglePurchased = async (itemId) => {
     try {
